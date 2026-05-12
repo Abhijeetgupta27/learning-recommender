@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 import httpx
+import os
 
 app = FastAPI(
     title="API Gateway",
@@ -23,11 +24,17 @@ app.add_middleware(
 # Service URLs
 # -----------------------------------------
 
-RECOMMENDATION_SERVICE = "http://recommendation-service:8001"
+RECOMMENDATION_SERVICE = os.getenv(
+    "RECOMMENDATION_SERVICE"
+)
 
-USER_SERVICE = "http://user-service:8002"
+USER_SERVICE = os.getenv(
+    "USER_SERVICE"
+)
 
-FEEDBACK_SERVICE = "http://feedback-service:8003"
+FEEDBACK_SERVICE = os.getenv(
+    "FEEDBACK_SERVICE"
+)
 
 # -----------------------------------------
 # Health Endpoint
