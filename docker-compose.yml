@@ -1,0 +1,48 @@
+version: '3.9'
+
+services:
+
+  recommendation-service:
+
+    build:
+      context: ./backend/recommendation-service
+
+    container_name: recommendation-service
+
+    ports:
+      - "8001:8001"
+
+  user-service:
+
+    build:
+      context: ./backend/user-service
+
+    container_name: user-service
+
+    ports:
+      - "8002:8002"
+
+  feedback-service:
+
+    build:
+      context: ./backend/feedback-service
+
+    container_name: feedback-service
+
+    ports:
+      - "8003:8003"
+
+  api-gateway:
+
+    build:
+      context: ./backend/api-gateway
+
+    container_name: api-gateway
+
+    ports:
+      - "8000:8000"
+
+    depends_on:
+      - recommendation-service
+      - user-service
+      - feedback-service
