@@ -85,6 +85,11 @@ function App() {
               placeholder="Search courses like machine learning, python, AI..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  getRecommendations();
+                }
+              }}
               className="flex-1 border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
 
@@ -136,6 +141,22 @@ function App() {
 
         )}
 
+        {/* Empty State */}
+
+        {!loading && courses.length === 0 && (
+
+          <div className="text-center py-20 text-gray-500">
+
+            <h2 className="text-3xl font-bold mb-4">
+              Start Exploring Courses 🚀
+            </h2>
+
+            <p className="text-lg">
+              Search for topics like AI, Python, Machine Learning, Data Science...
+            </p>
+          </div>
+        )}
+
         {/* Recommendation Cards */}
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -144,7 +165,7 @@ function App() {
 
             <div
               key={index}
-              className="bg-white/80 backdrop-blur-md rounded-3xl shadow-xl p-6 hover:shadow-2xl hover:-translate-y-2 transition duration-300 border border-white/30"
+              className="bg-white/80 backdrop-blur-md rounded-3xl shadow-xl p-6 hover:shadow-2xl hover:-translate-y-3 hover:scale-[1.02] transition duration-300 border border-white/30"
             >
 
               <h2 className="text-2xl font-bold text-gray-800 mb-3">
@@ -167,6 +188,10 @@ function App() {
 
                 <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">
                   {course.course_difficulty}
+                </span>
+
+                <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full">
+                  {Math.round(course.similarity * 100)}% Match
                 </span>
 
               </div>
