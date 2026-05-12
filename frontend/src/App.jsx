@@ -54,7 +54,7 @@ function App() {
 
   return (
 
-    <div className="min-h-screen bg-gray-100 p-10">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-gray-100 to-purple-100 p-10">
 
       <div className="max-w-5xl mx-auto">
 
@@ -62,7 +62,7 @@ function App() {
 
         <div className="text-center mb-10">
 
-          <h1 className="text-5xl font-bold text-blue-600 mb-4">
+          <h1 className="text-6xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
             Personalized Learning Recommender
           </h1>
 
@@ -74,7 +74,7 @@ function App() {
 
         {/* Search Section */}
 
-        <div className="bg-white rounded-2xl shadow-lg p-6 mb-10">
+        <div className="bg-white/70 backdrop-blur-md rounded-3xl shadow-2xl p-6 mb-10 border border-white/30">
 
           <div className="flex flex-col md:flex-row gap-4">
 
@@ -107,7 +107,7 @@ function App() {
 
             <button
               onClick={getRecommendations}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:scale-105 hover:shadow-xl text-white px-6 py-3 rounded-xl font-semibold transition duration-300"
             >
               Recommend
             </button>
@@ -128,8 +128,10 @@ function App() {
 
         {loading && (
 
-          <div className="text-center text-lg text-blue-600 font-semibold">
-            Loading recommendations...
+          <div className="flex justify-center items-center py-10">
+
+            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600"></div>
+
           </div>
 
         )}
@@ -142,7 +144,7 @@ function App() {
 
             <div
               key={index}
-              className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition"
+              className="bg-white/80 backdrop-blur-md rounded-3xl shadow-xl p-6 hover:shadow-2xl hover:-translate-y-2 transition duration-300 border border-white/30"
             >
 
               <h2 className="text-2xl font-bold text-gray-800 mb-3">
