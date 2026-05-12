@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+  name: recommendation-deployment
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: recommendation-service
+
+  template:
+
+    metadata:
+      labels:
+        app: recommendation-service
+
+    spec:
+      containers:
+        - name: recommendation-service
+
+          image: learning-recommender-recommendation-service:latest
+
+          imagePullPolicy: IfNotPresent
+
+          ports:
+            - containerPort: 8001

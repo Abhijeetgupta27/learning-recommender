@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+  name: feedback-deployment
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: feedback-service
+
+  template:
+
+    metadata:
+      labels:
+        app: feedback-service
+
+    spec:
+      containers:
+        - name: feedback-service
+
+          image: learning-recommender-feedback-service:latest
+
+          imagePullPolicy: IfNotPresent
+
+          ports:
+            - containerPort: 8003
