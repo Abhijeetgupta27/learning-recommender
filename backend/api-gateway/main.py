@@ -23,11 +23,11 @@ app.add_middleware(
 # Service URLs
 # -----------------------------------------
 
-RECOMMENDATION_SERVICE = "http://127.0.0.1:8001"
+RECOMMENDATION_SERVICE = "http://recommendation-service:8001"
 
-USER_SERVICE = "http://127.0.0.1:8002"
+USER_SERVICE = "http://user-service:8002"
 
-FEEDBACK_SERVICE = "http://127.0.0.1:8003"
+FEEDBACK_SERVICE = "http://feedback-service:8003"
 
 # -----------------------------------------
 # Health Endpoint
