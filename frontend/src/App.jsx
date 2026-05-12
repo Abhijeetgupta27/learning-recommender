@@ -1,21 +1,184 @@
+import { useState } from "react";
+import axios from "axios";
+
 function App() {
+
+  const [query, setQuery] = useState("");
+  const [difficulty, setDifficulty] = useState("Beginner");
+
+  const [courses, setCourses] = useState([]);
+
+  const [loading, setLoading] = useState(false);
+
+  const [error, setError] = useState("");
+
+  // -----------------------------------------
+  // Fetch recommendations from backend
+  // -----------------------------------------
+
+  const getRecommendations = async () => {
+
+    if (!query.trim()) {
+      setError("Please enter a search query");
+      return;
+    }
+
+    setLoading(true);
+
+    setError("");
+
+    try {
+
+      const response = await axios.post(
+        "http://127.0.0.1:8001/recommend",
+        {
+          query,
+          difficulty,
+          top_n: 5
+        }
+      );
+
+      setCourses(response.data);
+
+    } catch (err) {
+
+      console.error(err);
+
+      setError("Failed to fetch recommendations");
+
+    } finally {
+
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
 
-      <div className="bg-white p-10 rounded-2xl shadow-xl">
+    <div className="min-h-screen bg-gray-100 p-10">
 
-        <h1 className="text-4xl font-bold text-blue-600 mb-4">
-          Personalized Learning Recommender
-        </h1>
+      <div className="max-w-5xl mx-auto">
 
-        <p className="text-gray-600 text-lg">
-          Frontend setup successful 🚀
-        </p>
+        {/* Header */}
+
+        <div className="text-center mb-10">
+
+          <h1 className="text-5xl font-bold text-blue-600 mb-4">
+            Personalized Learning Recommender
+          </h1>
+
+          <p className="text-gray-600 text-lg">
+            Discover the best learning paths using AI-powered recommendations
+          </p>
+
+        </div>
+
+        {/* Search Section */}
+
+        <div className="bg-white rounded-2xl shadow-lg p-6 mb-10">
+
+          <div className="flex flex-col md:flex-row gap-4">
+
+            {/* Search Input */}
+
+            <input
+              type="text"
+              placeholder="Search courses like machine learning, python, AI..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className="flex-1 border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+
+            {/* Difficulty Dropdown */}
+
+            <select
+              value={difficulty}
+              onChange={(e) => setDifficulty(e.target.value)}
+              className="border border-gray-300 rounded-xl px-4 py-3"
+            >
+
+              <option>Beginner</option>
+              <option>Intermediate</option>
+              <option>Advanced</option>
+              <option>Mixed</option>
+
+            </select>
+
+            {/* Button */}
+
+            <button
+              onClick={getRecommendations}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition"
+            >
+              Recommend
+            </button>
+
+          </div>
+
+          {/* Error */}
+
+          {error && (
+            <p className="text-red-500 mt-4">
+              {error}
+            </p>
+          )}
+
+        </div>
+
+        {/* Loading */}
+
+        {loading && (
+
+          <div className="text-center text-lg text-blue-600 font-semibold">
+            Loading recommendations...
+          </div>
+
+        )}
+
+        {/* Recommendation Cards */}
+
+        <div className="grid md:grid-cols-2 gap-6">
+
+          {courses.map((course, index) => (
+
+            <div
+              key={index}
+              className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition"
+            >
+
+              <h2 className="text-2xl font-bold text-gray-800 mb-3">
+                {course.course_title}
+              </h2>
+
+              <p className="text-gray-600 mb-4">
+                {course.course_organization}
+              </p>
+
+              <div className="flex flex-wrap gap-3 text-sm">
+
+                <span className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full">
+                  ⭐ {course.rating}
+                </span>
+
+                <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full">
+                  👥 {Math.round(course.enrollment).toLocaleString()}
+                </span>
+
+                <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">
+                  {course.course_difficulty}
+                </span>
+
+              </div>
+
+            </div>
+
+          ))}
+
+        </div>
 
       </div>
 
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
