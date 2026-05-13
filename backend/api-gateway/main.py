@@ -3,6 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 import httpx
 import os
 
+JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+
 app = FastAPI(
     title="API Gateway",
     version="1.0.0"
