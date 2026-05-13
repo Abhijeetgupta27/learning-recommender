@@ -24,7 +24,7 @@ spec:
 
           image: learning-recommender-user-service:latest
 
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Never
 
           ports:
             - containerPort: 8002
